@@ -1,0 +1,352 @@
+<div class="container-fluid" style="overflow: hidden">
+    <div class="row flex-nowrap">
+        <div id="sidebar" class="col-auto sidebar collapse collapse-horizontal show" style="height: 100vh">
+            <app-menu></app-menu>
+
+        </div>
+        <main class="col" style="height: 100vh; overflow: scroll; overflow-x: hidden">
+            <nav class="bg-danger navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                <h1 style="width: 20px"></h1>
+                <a href="#" class="sidebar-toggler flex-shrink-0" data-bs-toggle="collapse" data-bs-target="#sidebar"
+                    aria-expanded="false" aria-controls="collapseWidthExample">
+                    <i class="fa fa-bars"></i>
+                </a>
+
+                <div class="d-flex justify-content-end w-100">
+                    <app-navbar></app-navbar>
+                </div>
+            </nav>
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                        
+                            <div class="ms-3">
+                                <p class="mb-2">Total Recruteurs</p>
+                                <h6 class="mb-0">23</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                            <div class="ms-3">
+                                <p class="mb-2">Total Annonces</p>
+                                <h6 class="mb-0">33</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                            <div class="ms-3">
+                                <p class="mb-2">Total Demandeurs</p>
+                                <h6 class="mb-0">34</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                            <div class="ms-3">
+                                <p class="mb-2">Total Postulation</p>
+                                <h6 class="mb-0">33</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row re" style="margin-left: auto; margin-right: auto; margin-top: 10px">
+                <div class="col d-flex justify-content-between">
+                    <!-- Button trigger modal -->
+                    <button type="submit" class="ajout" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                        style="height: 40px" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+                        Ajouter demandeur
+                    </button>
+
+
+
+
+
+                    <!-- Modal de modif -->
+                    <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form #update="ngForm" (ngSubmit)="add()">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">
+                                            Creation d'un demandeur
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+
+                                            <div class="input-box">
+                                                <Label>Photo demandeur*</Label>
+                                                <input type="file" placeholder="Logo.jpg" id="photodemandeur" name="photodemandeur"
+                                                    class="form-control" accept="image/png, image/jpeg, image/jpg"
+                                                    required [(ngModel)]="photodemandeur" 
+                                                    (change)="selectFile($event)"  />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-box">
+                                                <span> Nom demandeur *</span>
+                                                <input type="text" class="form-control" name="nomDemandeur" id="nomDemandeur"
+                                                    placeholder="Donner le nom du demandeur" required [(ngModel)]="nomDemandeur" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-box">
+                                                <span> Prenom demandeur *</span>
+                                                <input type="text" class="form-control" name="prenomDemandeur" id="prenomDemandeur"
+                                                    placeholder="Donner le prenom du demandeur" required [(ngModel)]="prenomDemandeur" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-box">
+                                                <span>Adresse du demandeur *</span>
+                                                <input type="text" class="form-control" name="adresseDemandeur" id="adresseDemandeur"
+                                                    placeholder="Donner l'adresse du demendeur" required [(ngModel)]="adresseDemandeur" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-box">
+                                                <span> Email *</span>
+                                                <input type="email" class="form-control" name="emailDemandeur" id="emailDemandeur"
+                                                    placeholder="Donner l'email du demandeur" [(ngModel)]="emailDemandeur" required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-box">
+                                                <span> Age demandeur *</span>
+                                                <input type="number" class="form-control" name="ageDemandeur" id="ageDemandeur"
+                                                    placeholder="Donner l'age du demandeur" [(ngModel)]="ageDemandeur"required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-box">
+                                                <span> CV *</span>
+                                                <input type="file" class="form-control" name="cv" id="cv"
+                                                    placeholder="Donner le CV " required [(ngModel)]="cv" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-box">
+                                                <span> Dossier demandeur *</span>
+                                                <input type="file" class="form-control" name="dossierdemandeur" id="dossierdemandeur"
+                                                    placeholder="Donner le dossier du demandeur" required [(ngModel)]="dossierDemandeur" 
+                                                    (change)="selectdoc($event)" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-box">
+                                                <span> Profil du demandeur *</span>
+                                                <input type="text" class="form-control" name="profilDemandeur" id="profilDemandeur"
+                                                    placeholder="Donner le profil du demandeur" required [(ngModel)]="profilDemandeur" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-box">
+                                                <span> Mot de passe *</span>
+                                                <input type="password" class="form-control" name="passwordDemandeur" id="passwordDemandeur"
+                                                    placeholder="Creer un mot de passe" required [(ngModel)]="passwordDemandeur" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn-secondary" data-bs-dismiss="modal">
+                                            Annuler
+                                        </button>
+                                        <button type="submit" class="btn-primary">
+                                            Ajouter
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal modification demandeur -->
+                    <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form #update="ngForm" (ngSubmit)="add()">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">
+                                            Creation d'un demandeur
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+
+                                            <div class="input-box">
+                                                <Label>Photo demandeur*</Label>
+                                                <input type="file" placeholder="Logo.jpg" id="photodemandeur" name="photodemandeur"
+                                                    class="form-control" accept="image/png, image/jpeg, image/jpg"
+                                                    required [(ngModel)]="photodemandeur" 
+                                                    (change)="selectFile($event)"  />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-box">
+                                                <span> Nom demandeur *</span>
+                                                <input type="text" class="form-control" name="nomDemandeur" id="nomDemandeur"
+                                                    placeholder="Donner le nom du demandeur" required [(ngModel)]="nomDemandeur" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-box">
+                                                <span> Prenom demandeur *</span>
+                                                <input type="text" class="form-control" name="prenomDemandeur" id="prenomDemandeur"
+                                                    placeholder="Donner le prenom du demandeur" required [(ngModel)]="prenomDemandeur" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-box">
+                                                <span>Adresse du demandeur *</span>
+                                                <input type="text" class="form-control" name="adresseDemandeur" id="adresseDemandeur"
+                                                    placeholder="Donner l'adresse du demendeur" required [(ngModel)]="adresseDemandeur" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-box">
+                                                <span> Email *</span>
+                                                <input type="email" class="form-control" name="emailDemandeur" id="emailDemandeur"
+                                                    placeholder="Donner l'email du demandeur" [(ngModel)]="emailDemandeur" required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-box">
+                                                <span> Age demandeur *</span>
+                                                <input type="number" class="form-control" name="ageDemandeur" id="ageDemandeur"
+                                                    placeholder="Donner l'age du demandeur" [(ngModel)]="ageDemandeur"required />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-box">
+                                                <span> CV *</span>
+                                                <input type="file" class="form-control" name="cv" id="cv"
+                                                    placeholder="Donner le CV " required [(ngModel)]="cv" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-box">
+                                                <span> Dossier demandeur *</span>
+                                                <input type="file" class="form-control" name="dossierdemandeur" id="dossierdemandeur"
+                                                    placeholder="Donner le dossier du demandeur" required [(ngModel)]="dossierDemandeur" 
+                                                    (change)="selectdoc($event)" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-box">
+                                                <span> Profil du demandeur *</span>
+                                                <input type="text" class="form-control" name="profilDemandeur" id="profilDemandeur"
+                                                    placeholder="Donner le profil du demandeur" required [(ngModel)]="profilDemandeur" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-box">
+                                                <span> Mot de passe *</span>
+                                                <input type="password" class="form-control" name="passwordDemandeur" id="passwordDemandeur"
+                                                    placeholder="Creer un mot de passe" required [(ngModel)]="passwordDemandeur" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn-secondary" data-bs-dismiss="modal">
+                                            Annuler
+                                        </button>
+                                        <button type="submit" class="btn-primary">
+                                            Actualiser
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid pt-4 px-4" style="margin-left: -2.2%; width: 104%">
+                <div class="row g-4">
+                    <div class="col-12">
+                        <div class="bg-light text-center rounded p-4">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h6 class="mb-0 py-1">La liste des demandeurs</h6>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="d-none d-md-flex ms-4">
+                                        <i class="bx bx-search icon fa-2x py-1"></i>
+                                        <input
+                                            class="form-control border-0 border-2 border-start border-end border-alert"
+                                            type="search" placeholder="Rechercher..."   [(ngModel)]="searhText" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="header_fixed py-2">
+                                <table>
+                                    <thead>
+                                        <tr >
+                                            <th>Nom demandeur</th>
+                                            <th>Prenom demandeur</th>
+                                            <th>Photo</th>
+                                            <th>Adresse demandeur</th>
+                                            <th>Age demandeur</th>
+                                            <th>Email demandeur</th>
+                                            <th>Profil demandeur</th>
+                                            <th>Action</th>
+
+                                            <!-- <th>Action</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let all of undemandeur | paginate:{itemsPerPage: 4, currentPage: p}
+                                        |filter:searhText; let i = index">
+                                            <td>{{all.nomdemandeur}}</td>
+                                            <td>{{all.prenomdemandeur}}</td>
+                                            <td><img src="{{all.photodemandeur}}" alt="" /></td>
+                                            <td>{{all.adressedemandeur}}</td>
+                                            <td>{{all.agedemandeur}}</td>
+                                            <td>{{all.emaildemandeur}}</td>
+                                            <td>{{all.profildemandeur}}</td>
+                                            <td>
+                                                <div class="col" style="display: flex">
+                                                    <i data-bs-toggle="modal" data-bs-target="#staticBackdrop2"
+                                                        class="bi bi-pencil-square i"
+                                                        style="color: rgb(58, 190, 31); font-size: 20px">
+                                                    </i>
+                                                    &nbsp; &nbsp; &nbsp; &nbsp;
+                                                    <i class="bi bi-trash3" style="color: red; font-size: 20px" (click)="removeDemandeur(all.iddemandeur)">
+                                                    </i>
+                                                </div>
+                                            </td>
+
+                                            <!-- <td><button>View</button></td> -->
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="pag">
+                                    <pagination-controls (pageChange)="p = $event" nextLabel="Suivants" previousLabel="Précedents"
+                                      [responsive]="responsive"></pagination-controls>
+                                  </div>
+                            </div>
+                            <div class="pag">
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <app-footer></app-footer>
+        </main>
+    </div>
+</div>
