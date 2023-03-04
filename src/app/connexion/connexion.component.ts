@@ -9,7 +9,8 @@ import { StorageService } from '../Services/storage.service';
   styleUrls: ['./connexion.component.scss']
 })
 export class ConnexionComponent implements OnInit {
-
+  passwordadmin:any
+  emailadmin:any
   form: any = {
     emailadmin: null,
     passwordadmin: null
@@ -51,6 +52,7 @@ onSubmit(): void {
     next: data => {
       this.storage.saveUser(data);
       this.router.navigateByUrl('/dashboard')
+      this.formreset()
       this.isLoginFailed = false;
       this.isLoggedIn = true;
       this.roles = this.storage.getUser().roles;
@@ -67,5 +69,10 @@ onSubmit(): void {
 
 reloadPage(): void {
   window.location.reload();
+}
+formreset(){
+   
+  this.emailadmin="",
+  this.passwordadmin=""
 }
 }

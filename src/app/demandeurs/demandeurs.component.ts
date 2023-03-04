@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 import { DemandeurService } from '../Services/demandeur.service';
 
 @Component({
@@ -68,6 +69,16 @@ export class DemandeursComponent implements OnInit {
       this.demandeurdata=data
       console.log(demandeur)
     })
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Demandeur ajouté avec succès',
+      showConfirmButton: false,
+      timer: 1500,
+      heightAuto:false
+    })
+    this.formreset()
+    //window.location.reload();
   }
 
   selectFile(e:any){
@@ -132,20 +143,56 @@ export class DemandeursComponent implements OnInit {
   }
 
   removeDemandeur(iddemandeur:number) {
-    if (window.confirm('Etes-vous sure de vouloir supprimé ?')) {
-      this.demandeurserv.deletedemandeur(iddemandeur)
+    Swal.fire({
+      title: 'Etes vous sure?',
+      text: "Vous ne pourrez pas revenir!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Supprimer'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        this.demandeurserv.deletedemandeur(iddemandeur)
       
       .subscribe(() => {
           this.ionViewDidEnter();
-          console.log('User deleted!')
+         // console.log('Recruteur deleted!')
           
         }
       )
-      window.location.reload();
-    }
+        Swal.fire(
+          'Supprimé !',
+          'Le demandeur a été supprimé.',
+          'success'
+        )
+      }
+    })
+ 
+      
+      
+      
+      
+      //window.location.reload()
+    
   }
   reloadPage(): void {
     window.location.reload();
   }
+
+  formreset(){
+
+    this.photodemandeur='',
+    this.dossierDemandeur='',
+    this.cv='',
+    this.profilDemandeur='',
+    this.passwordDemandeur='',
+    this.emailDemandeur='',
+    this.ageDemandeur='',
+    this.adresseDemandeur='',
+    this.prenomDemandeur='',
+    this.nomDemandeur=''
+    }
 
 }

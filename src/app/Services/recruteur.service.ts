@@ -34,6 +34,7 @@ export class RecruteurService {
     
     const data:FormData=new FormData();
     data.append('image',image)
+    
     data.append('recruteur', JSON.stringify(recruteur).slice(1,JSON.stringify(recruteur).lastIndexOf(']')));
     
     return this.http.post(`http://localhost:8080/api/auth/signup/Recruteur`,data);

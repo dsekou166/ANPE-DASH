@@ -65,6 +65,7 @@ export class DashboardComponent implements OnInit {
       this.annoncedata=data
       console.log(this.annoncedata)
     })
+    /*window.location.reload();*/
   }
 
   selectFile(e:any){
@@ -124,7 +125,7 @@ export class DashboardComponent implements OnInit {
           
         }
       )
-      window.location.reload();
+     // window.location.reload();
     }
   }
   reloadPage(): void {

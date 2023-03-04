@@ -10,9 +10,11 @@ import { StorageService } from '../Services/storage.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-
+  nomadmin:any
   unadmin: any;
   idadmin: any;
+  emailadmin:any;
+  passwordadmin:any;
 
   constructor(
     private admin:AdminService,
@@ -39,12 +41,19 @@ export class NavbarComponent implements OnInit {
         console.log(res);
         this.storage.clean();
         this.router.navigateByUrl("/connexion")
+        this.formreset()
         //window.location.reload();
       },
       error: err => {
         console.log(err);
       }
     });
+  }
+
+  formreset(){
+   
+    this.emailadmin="",
+    this.passwordadmin=""
   }
 
 }

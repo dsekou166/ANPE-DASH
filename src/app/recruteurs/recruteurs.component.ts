@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecruteurService } from '../Services/recruteur.service';
 import { StorageService } from '../Services/storage.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-recruteurs',
@@ -15,7 +16,7 @@ export class RecruteursComponent implements OnInit {
   unrecruteur:any;
   idrecruteur:any;
   nomentreprise:any;
-  message:any
+ // message:any
   secteur:any
   photoentreprise:any
   passwordadmin:any
@@ -58,43 +59,54 @@ export class RecruteursComponent implements OnInit {
         "nomentreprise":this.nomentreprise,
         "secteur":this.secteur,
         "adresseentreprise":this.adresseentreprise,
-        "emailentreprise":this.secteur,
-        "message":this.message,
+        "emailentreprise":this.emailentreprise,
+        //"message":this.message,
         "photoentreprise":'',
         "passwordentreprise":this.passwordentreprise,
        //"role":this.role,
   
       }] 
+      
       const data=new FormData
       data.append('image',this.fichier)
       data.append('recruteur', JSON.stringify(recruteur).slice(1,JSON.stringify(recruteur).lastIndexOf(']')));
       console.log("mes donnees avant",recruteur);
       this.servrecr.recruteurregister(recruteur,this.fichier).subscribe(data=>{
         this.recruteurdata=data
+
         console.log(recruteur)
       })
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Recruteur ajouté avec succès',
+        showConfirmButton: false,
+        timer: 1500,
+        heightAuto:false
+      })
+      this.formreset()
     }
     
-  selectFile(e:any){
-    //verification si une photo a été choisie ou pas
-    if(!e.target.files[0] || e.target.files[0].length==0){
-      this.message="Vous devez choisir un fichier  !";
-      this.erreur=true;
-      return;
-    }
-
-    //verification du type de fichier choisi pour recaler si ce n'est pas une photo
-    var typeFichier=e.target.files[0].type;
-    if(e.target.files){
-      var reader= new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onload=(event:any)=>{
-        this.message="";
-        //this.fichier=event.target.result;
-        this.fichier=e.target['files'][0];
+    selectFile(e:any){
+      //verification si une photo a été choisie ou pas
+      if(!e.target.files[0] || e.target.files[0].length==0){
+        this.messagee="Vous devez choisir un fichier  !";
+        this.erreur=true;
+        return;
+      }
+  
+      //verification du type de fichier choisi pour recaler si ce n'est pas une photo
+      var typeFichier=e.target.files[0].type;
+      if(e.target.files){
+        var reader= new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload=(event:any)=>{
+          this.messagee="";
+          //this.fichier=event.target.result;
+          this.fichier=e.target['files'][0];
+        }
       }
     }
-  }
 
 
       ionViewDidEnter() {
@@ -104,19 +116,47 @@ export class RecruteursComponent implements OnInit {
       }
     
       removeRecruteur(idrecruteur:number) {
-        if (window.confirm('Etes-vous sure de vouloir supprimé ?')) {
+        
+        Swal.fire({
+          title: 'Etes vous sure?',
+          text: "Vous ne pourrez pas revenir!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Supprimer'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            
           this.servrecr.deleterecruteur(idrecruteur)
           
           .subscribe(() => {
               this.ionViewDidEnter();
-              console.log('Recruteur deleted!')
+             // console.log('Recruteur deleted!')
               
             }
           )
-          window.location.reload();
-        }
+            Swal.fire(
+              'Supprimé !',
+              'Le recruteur a été supprimé.',
+              'success'
+            )
+          }
+        })
+          //window.location.reload();
+        
       }
       reloadPage(): void {
         window.location.reload();
       }
+
+      formreset(){
+        this.nomentreprise='',
+        this.secteur= '',
+        this.photoentreprise='',
+        this.adresseentreprise='',
+        this.emailentreprise='',
+        this.passwordentreprise=''
+      }
+
   }

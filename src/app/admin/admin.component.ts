@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { AdminService } from '../Services/admin.service';
 import { StorageService } from '../Services/storage.service';
 
@@ -24,19 +25,20 @@ export class AdminComponent implements OnInit {
   erreur!: boolean
   image: any
   fichier:any
+  Admins: any = [];
 
-  constructor(private route:ActivatedRoute,private servdemd:AdminService,private storageService:StorageService,private router:Router) { }
+  constructor(private route:ActivatedRoute,private servAdmin:AdminService,private storageService:StorageService,private router:Router) { }
 
   ngOnInit(): void {
     //this.currentUser = this.storageService.getUser;
     this.idadmin= this.storageService.getUser();
 
-    this.servdemd.getadminbyid(this.idadmin.id).subscribe(data=>{
+    this.servAdmin.getadminbyid(this.idadmin.id).subscribe(data=>{
       this.unadmin= data;
       //this.nomdemandeur= this.undemandeur.nomdemandeur
     })
 
-    this.servdemd.getadmin().subscribe(data => {
+    this.servAdmin.getadmin().subscribe(data => {
 
       this.unadmin = data
       console.log(this.unadmin)
@@ -59,10 +61,19 @@ export class AdminComponent implements OnInit {
     data.append('image',this.fichier)
     data.append('admin', JSON.stringify(admin).slice(1,JSON.stringify(admin).lastIndexOf(']')));
     console.log("mes donnees avant",admin);
-    this.servdemd.adminregister(admin,this.fichier).subscribe(data=>{
+    this.servAdmin.adminregister(admin,this.fichier).subscribe(data=>{
       this.admindata=data
       console.log(admin)
     })
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Admin ajouté avec succès',
+      showConfirmButton: false,
+      timer: 1500,
+      heightAuto:false
+    })
+    this.formreset()
   }
   
   selectFile(e:any){
@@ -85,4 +96,52 @@ export class AdminComponent implements OnInit {
       }
     }
   }
+
+  ionViewDidEnter() {
+    this.servAdmin.getadmin().subscribe((response) => {
+      this.Admins = response;
+    })
+  }
+  removeAdmin(idadmin:number) {
+    Swal.fire({
+      title: 'Etes vous sure?',
+      text: "Vous ne pourrez pas revenir!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Supprimer'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        this.servAdmin.deleteadmin(idadmin)
+      
+      .subscribe(() => {
+          this.ionViewDidEnter();
+         // console.log('Recruteur deleted!')
+          
+        }
+      )
+        Swal.fire(
+          'Supprimé !',
+          'Admin a été supprimé.',
+          'success'
+        )
+      }
+    })
+
+
+}
+reloadPage(): void {
+  window.location.reload();
+}
+
+formreset(){
+  this.nomadmin="",
+  this.passwordadmin="",
+  this.emailadmin="",
+  this.prenomadmin="",
+  this.photoadmin=""
+}
+
 }

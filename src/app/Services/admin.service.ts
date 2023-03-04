@@ -50,11 +50,11 @@ export class AdminService {
   }
 
   getadmin(): Observable<any>{
-    return this.http.get(`${this.env.api}/auth/listadmin`)
+    return this.http.get(`http://localhost:8080/api/auth/listadmin`)
   }
 
   deleteadmin(id:number) {
-    return this.http.delete(`${this.env.api}/auth/deletedemandeur/${id}`)
+    return this.http.delete(`http://localhost:8080/api/auth/deleteadmin/${id}`)
       
   }
 }
