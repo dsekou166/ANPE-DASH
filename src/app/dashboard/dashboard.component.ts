@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AnnonceService } from '../Services/annonce.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dashboard',
@@ -116,18 +117,35 @@ export class DashboardComponent implements OnInit {
   }
 
   removeAnnonce(idannonce:number) {
-    if (window.confirm('Etes-vous sure de vouloir supprimé ?')) {
-      this.annonceserv.deleteannonce(idannonce)
+    Swal.fire({
+      title: 'Etes vous sure?',
+      text: "Vous ne pourrez pas revenir!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Supprimer'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        this.annonceserv.deleteannonce(idannonce)
       
       .subscribe(() => {
           this.ionViewDidEnter();
-          console.log('Annonce deleted!')
+         // console.log('Recruteur deleted!')
           
         }
       )
-     // window.location.reload();
-    }
-  }
+        Swal.fire(
+          'Supprimé !',
+          'Annonce a été supprimé.',
+          'success'
+        )
+      }
+    })
+
+
+}
   reloadPage(): void {
     window.location.reload();
   }
